@@ -1,0 +1,356 @@
+{
+  "name": "zovo-reg-editor",
+  "displayName": "REG File Editor & Hive Viewer",
+  "description": "REG file editor and registry hive viewer for VS Code: open Windows .reg files as a key tree with every value type decoded, edit values, get syntax colors and marks on bad lines, and browse binary hives such as NTUSER.DAT, SYSTEM and SOFTWARE read-only. Offline, no account, and the live registry is never touched.",
+  "version": "0.1.1",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1E2A3A",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/reg-editor-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/theluckystrike/reg-editor-vscode/issues"
+  },
+  "homepage": "https://github.com/theluckystrike/reg-editor-vscode#readme",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "reg",
+    "registry",
+    "windows registry",
+    "regedit",
+    "hive"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onUri",
+    "onLanguage:reg"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "reg",
+        "aliases": [
+          "Windows Registry (REG)",
+          "reg"
+        ],
+        "extensions": [
+          ".reg"
+        ],
+        "firstLine": "^(Windows Registry Editor Version 5\\.00|REGEDIT4)\\s*$",
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "reg",
+        "scopeName": "source.reg",
+        "path": "./syntaxes/reg.tmLanguage.json"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "regEditor.reg",
+        "displayName": "REG File Editor (key tree)",
+        "selector": [
+          {
+            "filenamePattern": "*.reg"
+          }
+        ],
+        "priority": "default"
+      },
+      {
+        "viewType": "regEditor.hive",
+        "displayName": "Registry Hive Viewer",
+        "selector": [
+          {
+            "filenamePattern": "*.hiv"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "regEditor.openAsHive",
+        "title": "Open as Registry Hive",
+        "category": "Registry",
+        "icon": "$(database)"
+      },
+      {
+        "command": "regEditor.openWithViewer",
+        "title": "Open REG File Editor",
+        "category": "Registry",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "regEditor.openAsText",
+        "title": "Open as Text",
+        "category": "Registry",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "regEditor.openSample",
+        "title": "Open the Sample .reg File",
+        "category": "Registry"
+      },
+      {
+        "command": "regEditor.openSampleHive",
+        "title": "Open the Sample Hive",
+        "category": "Registry"
+      },
+      {
+        "command": "regEditor.openWalkthrough",
+        "title": "Get Started",
+        "category": "Registry"
+      },
+      {
+        "command": "regEditor.moreViewers",
+        "title": "More free tools by Zovo",
+        "category": "Registry"
+      },
+      {
+        "command": "regEditor.supportDeveloper",
+        "title": "Support the developer",
+        "category": "Registry"
+      },
+      {
+        "command": "regEditor.export",
+        "title": "Export or Convert: .reg 5.00, REGEDIT4, JSON, CSV (Pro)",
+        "category": "Registry",
+        "icon": "$(export)"
+      },
+      {
+        "command": "regEditor.diff",
+        "title": "Compare Two Registry Files or Hives (Pro)",
+        "category": "Registry",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "regEditor.timeline",
+        "title": "Last Write Timeline of a Hive (Pro)",
+        "category": "Registry",
+        "icon": "$(history)"
+      },
+      {
+        "command": "regEditor.zovoPro.export",
+        "title": "Zovo Pro: Export and convert"
+      },
+      {
+        "command": "regEditor.zovoPro.diff",
+        "title": "Zovo Pro: Compare two registry files"
+      },
+      {
+        "command": "regEditor.zovoPro.timeline",
+        "title": "Zovo Pro: Last write timeline"
+      },
+      {
+        "command": "regEditor.getPro",
+        "title": "Get Zovo Pro (USD 19 once, all Zovo extensions)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "regEditor.payWithPayPal",
+        "title": "Pay for Zovo Pro with PayPal (USD 19, team of 5 USD 59)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "regEditor.unlockWithSponsors",
+        "title": "I already paid: unlock with GitHub Sponsors",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "regEditor.enterLicenseKey",
+        "title": "Enter Zovo Pro license key",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "regEditor.removeLicense",
+        "title": "Remove Zovo Pro from this editor",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "regEditor.payByCard",
+        "title": "Pay for Zovo Pro by card (USD 19)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "regEditor.enterKey",
+        "title": "Enter a key",
+        "category": "Zovo Pro"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "regEditor.openAsText",
+          "when": "activeCustomEditorId == 'regEditor.reg'",
+          "group": "navigation@1"
+        },
+        {
+          "command": "regEditor.openWithViewer",
+          "when": "resourceFilename =~ /\\.reg$/i && activeEditor == workbench.editors.files.textFileEditor",
+          "group": "navigation@9"
+        },
+        {
+          "command": "regEditor.export",
+          "when": "(activeCustomEditorId == 'regEditor.reg' || activeCustomEditorId == 'regEditor.hive') && config.regEditor.showProTools",
+          "group": "1_reg@1"
+        },
+        {
+          "command": "regEditor.diff",
+          "when": "(activeCustomEditorId == 'regEditor.reg' || activeCustomEditorId == 'regEditor.hive') && config.regEditor.showProTools",
+          "group": "1_reg@2"
+        },
+        {
+          "command": "regEditor.timeline",
+          "when": "activeCustomEditorId == 'regEditor.hive' && config.regEditor.showProTools",
+          "group": "1_reg@3"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "regEditor.openWithViewer",
+          "when": "resourceFilename =~ /\\.reg$/i && !explorerResourceIsFolder",
+          "group": "navigation@9"
+        },
+        {
+          "command": "regEditor.openAsHive",
+          "when": "resourceFilename =~ /^[^.]+$|\\.(dat|hiv|hve|sav)$/i && !explorerResourceIsFolder",
+          "group": "navigation@9"
+        },
+        {
+          "command": "regEditor.zovoPro.export",
+          "when": "resourceFilename =~ /^[^.]+$|\\.(reg|dat|hiv|hve|sav)$/i && !explorerResourceIsFolder && config.regEditor.showProTools",
+          "group": "zovoPro@1"
+        },
+        {
+          "command": "regEditor.zovoPro.diff",
+          "when": "resourceFilename =~ /^[^.]+$|\\.(reg|dat|hiv|hve|sav)$/i && !explorerResourceIsFolder && config.regEditor.showProTools",
+          "group": "zovoPro@2"
+        },
+        {
+          "command": "regEditor.zovoPro.timeline",
+          "when": "resourceFilename =~ /^[^.]+$|\\.(dat|hiv|hve|sav)$/i && !explorerResourceIsFolder && config.regEditor.showProTools",
+          "group": "zovoPro@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "regEditor.export",
+          "when": "config.regEditor.showProTools"
+        },
+        {
+          "command": "regEditor.diff",
+          "when": "config.regEditor.showProTools"
+        },
+        {
+          "command": "regEditor.timeline",
+          "when": "config.regEditor.showProTools"
+        },
+        {
+          "command": "regEditor.zovoPro.export",
+          "when": "false"
+        },
+        {
+          "command": "regEditor.zovoPro.diff",
+          "when": "false"
+        },
+        {
+          "command": "regEditor.zovoPro.timeline",
+          "when": "false"
+        },
+        {
+          "command": "regEditor.openAsText",
+          "when": "activeCustomEditorId == 'regEditor.reg'"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "REG File Editor & Hive Viewer",
+      "properties": {
+        "regEditor.showProTools": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Zovo Pro tools (export and convert, compare, timeline) in the Command Palette, the Explorer menu and the viewer toolbar. Everything free stays visible."
+        },
+        "regEditor.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask once for a Marketplace rating after registry files opened without an error on two occasions at least 30 minutes apart. \"Later\" asks one more time after 7 days, \"No thanks\" never asks again. Nothing is sent anywhere."
+        },
+        "regEditor.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Rate, More free tools and Zovo Pro links at the bottom of the viewer. Nothing is sent anywhere."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "regEditor.start",
+        "title": "Get started with the REG File Editor",
+        "description": "Read and edit .reg files as a key tree, and browse registry hives, in VS Code.",
+        "steps": [
+          {
+            "id": "open",
+            "title": "Open a .reg file",
+            "description": "Click a .reg file. It opens as a key tree with a value table, every type decoded. Edit, add or remove a value there, or open the text beside it: the tree follows your typing and bad lines are marked.\n[Open the sample .reg file](command:regEditor.openSample)",
+            "media": {
+              "image": "images/screenshot.png",
+              "altText": "A .reg file open in VS Code: the key tree, the values of the selected key with their types decoded, and the file facts."
+            },
+            "completionEvents": [
+              "onCommand:regEditor.openSample"
+            ]
+          },
+          {
+            "id": "hives",
+            "title": "Registry hives",
+            "description": "Right-click NTUSER.DAT, UsrClass.dat, SYSTEM, SOFTWARE or SAM and pick Open as Registry Hive. Files ending in .hiv open directly. Hives open read-only.\n[Open the sample hive](command:regEditor.openSampleHive)",
+            "media": {
+              "markdown": "walkthrough/hives.md"
+            },
+            "completionEvents": [
+              "onCommand:regEditor.openSampleHive"
+            ]
+          },
+          {
+            "id": "zovo-related",
+            "title": "Tools that often go with registry files",
+            "description": "These free Zovo extensions open other Windows files. A link opens the extension page, and you choose there whether to install it.\n[Hex Viewer](command:extension.open?%5B%22zovo.zovo-hex-viewer%22%5D)\n[ELF & PE Viewer](command:extension.open?%5B%22zovo.zovo-elf-pe-viewer%22%5D)\n[Log Viewer](command:extension.open?%5B%22zovo.zovo-log-viewer%22%5D)",
+            "media": {
+              "markdown": "walkthrough/related.md"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node scripts/test.js",
+    "package": "npx -y @vscode/vsce@3 package --no-dependencies"
+  },
+  "devDependencies": {},
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "name": "Windows Registry (REG)",
+  "scopeName": "source.reg",
+  "comment": "Grammar for .reg files (Windows Registry Editor 5.00 and REGEDIT4), written for the Zovo REG File Editor.",
+  "patterns": [
+    {
+      "include": "#header"
+    },
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#key"
+    },
+    {
+      "include": "#value"
+    }
+  ],
+  "repository": {
+    "header": {
+      "match": "^\\s*(Windows Registry Editor Version 5\\.00|REGEDIT4)\\s*$",
+      "captures": {
+        "1": {
+          "name": "keyword.other.header.reg"
+        }
+      }
+    },
+    "comment": {
+      "match": "^\\s*(;).*$",
+      "name": "comment.line.semicolon.reg",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.comment.reg"
+        }
+      }
+    },
+    "key": {
+      "match": "^\\s*(\\[)(-)?((?:HKEY_[A-Za-z_]+)|[^\\\\\\]]*)((?:\\\\[^\\]]*)?)(\\])\\s*$",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.section.begin.reg"
+        },
+        "2": {
+          "name": "keyword.operator.delete.reg"
+        },
+        "3": {
+          "name": "support.constant.root-key.reg"
+        },
+        "4": {
+          "name": "entity.name.section.key.reg"
+        },
+        "5": {
+          "name": "punctuation.definition.section.end.reg"
+        }
+      }
+    },
+    "value": {
+      "begin": "^\\s*(?:(@)|(\")((?:[^\"\\\\]|\\\\.)*)(\"))\\s*(=)",
+      "beginCaptures": {
+        "1": {
+          "name": "variable.language.default-value.reg"
+        },
+        "2": {
+          "name": "punctuation.definition.string.begin.reg"
+        },
+        "3": {
+          "name": "variable.other.value-name.reg",
+          "patterns": [
+            {
+              "include": "#escape"
+            }
+          ]
+        },
+        "4": {
+          "name": "punctuation.definition.string.end.reg"
+        },
+        "5": {
+          "name": "keyword.operator.assignment.reg"
+        }
+      },
+      "end": "(?<!\\\\)$",
+      "patterns": [
+        {
+          "include": "#string"
+        },
+        {
+          "match": "\\G\\s*(-)\\s*$",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.delete.reg"
+            }
+          }
+        },
+        {
+          "match": "\\G\\s*(dword)(:)([0-9A-Fa-f]{1,8})\\s*$",
+          "captures": {
+            "1": {
+              "name": "storage.type.dword.reg"
+            },
+            "2": {
+              "name": "punctuation.separator.reg"
+            },
+            "3": {
+              "name": "constant.numeric.hex.reg"
+            }
+          }
+        },
+        {
+          "match": "\\G\\s*(hex)(?:(\\()([0-9A-Fa-f]{1,8})(\\)))?(:)",
+          "captures": {
+            "1": {
+              "name": "storage.type.hex.reg"
+            },
+            "2": {
+              "name": "punctuation.definition.type.reg"
+            },
+            "3": {
+              "name": "constant.numeric.type.reg"
+            },
+            "4": {
+              "name": "punctuation.definition.type.reg"
+            },
+            "5": {
+              "name": "punctuation.separator.reg"
+            }
+          }
+        },
+        {
+          "match": "\\b[0-9A-Fa-f]{1,2}\\b",
+          "name": "constant.numeric.byte.reg"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.byte.reg"
+        },
+        {
+          "match": "\\\\\\s*$",
+          "name": "constant.character.escape.line-continuation.reg"
+        }
+      ]
+    },
+    "string": {
+      "begin": "\\G\\s*\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.reg"
+        }
+      },
+      "end": "\"",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.reg"
+        }
+      },
+      "name": "string.quoted.double.reg",
+      "patterns": [
+        {
+          "include": "#escape"
+        }
+      ]
+    },
+    "escape": {
+      "match": "\\\\[\\\\\"]",
+      "name": "constant.character.escape.reg"
+    }
+  }
+}

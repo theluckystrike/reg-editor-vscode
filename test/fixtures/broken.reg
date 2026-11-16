@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Broken Demo]
+"Good"="fine"
+"Count"=dword:12345678x
+"Bad hex"=hex:01,zz,03
+this line is junk
+"Open"="no closing quote
+[HKEY_CURRENT_USER\Software\Broken Demo\Sub
+[HKEY_WRONG\Software]
+"Later"=dword:00000001

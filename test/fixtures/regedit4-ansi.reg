@@ -1,0 +1,6 @@
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Café]
+"Name"="Café € price"
+"Path"=hex(2):43,3a,5c,e9,00
+"List"=hex(7):61,00,62,e9,00,00
